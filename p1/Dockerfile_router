@@ -1,4 +1,4 @@
 FROM frrouting/frr
 ENV DAEMONS="zebra bgpd ospfd isisd"
 COPY daemons.conf /etc/frr/daemons
-CMD ["/usr/lib/frr/docker-start"]
+CMD ["/etc/init.d/frr start"]
