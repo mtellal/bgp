@@ -85,10 +85,12 @@ https://fr.wikipedia.org/wiki/IEEE_802.1Q
 </br>
 
 ## Bridge (Network Interface)
-
+ 
 #### Doc
 https://www.lemagit.fr/definition/Pont-reseau
 https://fr.wikipedia.org/wiki/Pont_(r%C3%A9seau)
+https://phoenixnap.fr/glossaire/ponts-LAN
+https://www.youtube.com/watch?v=yj0hXuUjPMo
 
 ### Informations
 - Behavior of a virtual switch or a virtual ethernet comutator 
@@ -101,7 +103,11 @@ https://fr.wikipedia.org/wiki/Pont_(r%C3%A9seau)
     Transparent Bridges:
         - Stations are unaware of the bridge's existence
         - Reconfiguration of the is not needed even of the     bridge is added or removed from network
-    Source Routing Bridges
+    Source Routing Bridges:
+        - Pass by a specific station
+    Local (Virtual/physic)
+    Bridge NAT (layer 2 + 3)
+    Bridge VLAN-aware
 
 ### Questions
 
@@ -175,3 +181,47 @@ Scénario 2 : Communication suivante
     Adresses MAC modifiables :
         Bien que les adresses MAC soient définies matériellement, elles peuvent être modifiées ou clonées via des outils logiciels. Cela peut compliquer la gestion du réseau.
 ```
+
+
+### Network Interfaces 
+
+#### Doc
+https://www.baeldung.com/linux/network-interface-physical-virtual
+
+- Hardware or Software component that connects a device to a network
+- Physical:
+    - Hardware Component that connect to a network (automatically ?) 
+    - A unique id (interface name) are assigned to it
+- Virtual:
+    - Software base that emulate behaviors of physical interface
+    - Includes VLAN, virtual tunnels, virtual wifi interface, network bridge
+- Difference:
+    - Main diff is that physical interface have fixed MAC address and speed compared to virtual interface
+    - Differents configurations
+- Use the `ls -l /sys/class/net/` command to check the type of interfaces
+```
+lrwxrwxrwx 1 root root 0 Jan 28 10:53 docker0 -> ../../devices/virtual/net/docker0
+lrwxrwxrwx 1 root root 0 Jan 28 16:20 enp0s3 -> ../../devices/pci0000:00/0000:00:03.0/net/enp0s3
+```
+
+</br>
+
+### Create a bridge between 2 interfaces for examples
+
+1. ip link add name br0 type bridge - create an interface 'br0' of type bridge
+2. ip link set dev br0 ip - up the interface (enable)
+3. ip link set eth1 master br0
+   ip link set eth0 master br0 -> connect eth1 and eth2 to the bridge interface
+
+Reminder: A bridge interface forward the packages that match certain MAC address (layer 2, MAC table etc...)
+
+
+
+### Create a VXLAN  
+
+
+
+
+## P3 - BGP configuration on GNS3
+
+https://www.youtube.com/watch?v=XcCID1ebkjs
