@@ -206,6 +206,11 @@ lrwxrwxrwx 1 root root 0 Jan 28 16:20 enp0s3 -> ../../devices/pci0000:00/0000:00
 
 </br>
 
+
+## P2
+
+- https://vincent.bernat.ch/en/blog/2017-vxlan-linux
+
 ### Create a bridge between 2 interfaces for examples
 
 1. ip link add name br0 type bridge - create an interface 'br0' of type bridge
@@ -216,17 +221,66 @@ lrwxrwxrwx 1 root root 0 Jan 28 16:20 enp0s3 -> ../../devices/pci0000:00/0000:00
 Reminder: A bridge interface forward the packages that match certain MAC address (layer 2, MAC table etc...)
 
 
+### VXLAN - Virtualized eXtensible Local Area Network
+
+#### Doc
+- https://www.youtube.com/watch?v=QPqVtguOz4w
+- https://www.youtube.com/watch?v=YNqKDI_bnPM&list=PLDQaRcbiSnqFe6pyaSy-Hwj8XRFPgZ5h8
+- https://forum.huawei.com/enterprise/intl/fr/thread/Que-sont-les-VTEP-et-les-VNI-dans-VXLAN/667502537563062272?blogId=667502537563062272
+
+The main purpose of a VXLAN is to segment the network exactly like VLAN 
+
+- Encapsulation	
+    Directement sur Ethernet	
+    UDP sur IP (sur Ethernet)
+- Nombre d’IDs	
+    4096 VLANs max (12 bits)	
+    ~16 millions de VXLANs (24 bits)
+- Transport	
+    Fonctionne sur un LAN	
+    Peut traverser un WAN/IP
+- Niveau	
+    Couche 2 (Ethernet)	
+    Couche 2 sur Couche 3 (Ethernet sur UDP/IP)
+- Cas d’usage	
+    Segmentation locale dans un switch ou routeur Virtualisation et Datacenters (overlay)
+
+- VXLAN frame format encapsule the original layer 2 frame </br>
+```
+-------------------------
+| VXLAN | Layer 2 Frame |
+-------------------------
+```
+- Upstream switch attaches a VXLAN header to the original frame. This header contains values ~16M compared to the 4096 of vlan
+- This new frame is encapsuled in a udp package (GRE ?)
+    GRE (Generic Routing Encapsulation) is a tunnel traffic encapsulation (IP to IP L3) (vpn ...)
+    
+
+</br>
+
+```
+Quand utiliser VXLAN, VLAN ou GRE ?
+- VLAN  -> Segmentation réseau sur un switch local
+- VXLAN -> Transporter du niveau 2 sur IP pour la virtualisation (VMs, conteneurs)
+- GRE   -> Interconnecter deux réseaux distants en tunnel IP
+```
 
 ### Create a VXLAN  
 
-
-
-## P2 - VXLAN
-
-ip link 
+https://www.fibermall.com/fr/blog/vxlan.htm# - Comprendre VXLAN : Explication du réseau local extensible virtuel
 
 
 
 ## P3 - BGP configuration on GNS3
 
 - https://www.youtube.com/watch?v=XcCID1ebkjs
+
+
+
+### VPC - Virutal Private Cloud
+
+
+
+### IP Command
+
+ip link 
