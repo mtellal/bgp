@@ -40,7 +40,7 @@ Concepts:
 ## LAN - Local Area Network
 
 #### Doc
-https://www.cloudflare.com/fr-fr/learning/network-layer/what-is-a-lan/
+- https://www.cloudflare.com/fr-fr/learning/network-layer/what-is-a-lan/
 
 ### Informations
 A network that defines devices on the same network, limited by the same physical (ex: geographic) zone. 
@@ -53,9 +53,9 @@ MAN -> Metropolitan Area Network - Cities
 ## VLAN - Virtual Local Area Network
 
 #### Doc
-https://fr.wikipedia.org/wiki/R%C3%A9seau_local_virtuel
-https://datascientest.com/vlan-tout-savoir
-https://fr.wikipedia.org/wiki/IEEE_802.1Q
+- https://fr.wikipedia.org/wiki/R%C3%A9seau_local_virtuel
+- https://datascientest.com/vlan-tout-savoir
+- https://fr.wikipedia.org/wiki/IEEE_802.1Q
 
 ### Informations
 - A way to divide a LAN Network into multiples networks VLAN (ex: marketing services and sales services)
@@ -71,8 +71,8 @@ https://fr.wikipedia.org/wiki/IEEE_802.1Q
 ## VXLAN - Virtual eXtensible Local Aran Network
 
 #### Doc
-https://www.youtube.com/watch?v=QPqVtguOz4w&list=PLUlQYvNTl7iZI0AqGywDAQ-typ-tpB4JV
-https://fr.wikipedia.org/wiki/IEEE_802.1Q
+- https://www.youtube.com/watch?v=QPqVtguOz4w&list=PLUlQYvNTl7iZI0AqGywDAQ-typ-tpB4JV
+- https://fr.wikipedia.org/wiki/IEEE_802.1Q
 
 ### Informations
 - Another encapsulation method
@@ -87,10 +87,10 @@ https://fr.wikipedia.org/wiki/IEEE_802.1Q
 ## Bridge (Network Interface)
  
 #### Doc
-https://www.lemagit.fr/definition/Pont-reseau
-https://fr.wikipedia.org/wiki/Pont_(r%C3%A9seau)
-https://phoenixnap.fr/glossaire/ponts-LAN
-https://www.youtube.com/watch?v=yj0hXuUjPMo
+- https://www.lemagit.fr/definition/Pont-reseau
+- https://fr.wikipedia.org/wiki/Pont_(r%C3%A9seau)
+- https://phoenixnap.fr/glossaire/ponts-LAN
+- https://www.youtube.com/watch?v=yj0hXuUjPMo
 
 ### Informations
 - Behavior of a virtual switch or a virtual ethernet comutator 
@@ -186,7 +186,7 @@ Scénario 2 : Communication suivante
 ### Network Interfaces 
 
 #### Doc
-https://www.baeldung.com/linux/network-interface-physical-virtual
+- https://www.baeldung.com/linux/network-interface-physical-virtual
 
 - Hardware or Software component that connects a device to a network
 - Physical:
@@ -221,7 +221,12 @@ Reminder: A bridge interface forward the packages that match certain MAC address
 
 
 
+## P2 - VXLAN
+
+ip link 
+
+
 
 ## P3 - BGP configuration on GNS3
 
-https://www.youtube.com/watch?v=XcCID1ebkjs
+- https://www.youtube.com/watch?v=XcCID1ebkjs
