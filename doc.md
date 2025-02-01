@@ -109,6 +109,41 @@ MAN -> Metropolitan Area Network - Cities
     Bridge NAT (layer 2 + 3)
     Bridge VLAN-aware
 
+### Simple exercice 
+
+We will create a simple exercice to understand how a bridge interface works.
+```
+TOPOLOGY
+        -------------------
+        |     router    |
+        -------------------
+             |eth0: l2|
+             |eth1: l2|
+             |br0: 30.1.1.254 (l3)|
+             -----|------               
+        eth0 |          | eth1
+             |          |
+        eth0 |          | eth1
+        ----------      ----------
+        | host-1 |      | host-2 |
+        ----------      ----------
+        30.1.1.1/24     30.1.1.2/24
+```
+- Assign IP address on each hosts on the same network (30.1.1.x)
+- We want to share and extend the communication between the hosts but each hosts are on different networks 
+- To resolve this, we use a bridge and link the interfaces connected with the hosts </br>
+```
+ip link add br0 type bridge
+ip link set eth0 master br0
+ip link set eth1 master br0
+```
+- To finalise the configuration our hosts need an ip address which they will communicate with
+- Then we assign an ip addr at the bridge (br0) on the same network as hosts (30.1.1.x)</br>
+```
+ip addr add 30.1.1.254/24 dev br0
+```
+- And Voila ! Hosts can ping each other 
+
 ### Questions
 
 ```
@@ -220,6 +255,12 @@ lrwxrwxrwx 1 root root 0 Jan 28 16:20 enp0s3 -> ../../devices/pci0000:00/0000:00
 
 Reminder: A bridge interface forward the packages that match certain MAC address (layer 2, MAC table etc...)
 
+### Create a VXLAN on eth1 
+
+ip  link add vxlan10 type vxlan10 id 10 dev eth1 remote x.x.x.x dtsport 4789 - 
+A vxlan is created on the eth1 interface with a vtep defined to 
+
+
 
 ### VXLAN - Virtualized eXtensible Local Area Network
 
@@ -227,6 +268,7 @@ Reminder: A bridge interface forward the packages that match certain MAC address
 - https://www.youtube.com/watch?v=QPqVtguOz4w
 - https://www.youtube.com/watch?v=YNqKDI_bnPM&list=PLDQaRcbiSnqFe6pyaSy-Hwj8XRFPgZ5h8
 - https://forum.huawei.com/enterprise/intl/fr/thread/Que-sont-les-VTEP-et-les-VNI-dans-VXLAN/667502537563062272?blogId=667502537563062272
+- https://www.youtube.com/watch?v=M4GpBecb59o
 
 The main purpose of a VXLAN is to segment the network exactly like VLAN 
 
@@ -256,6 +298,13 @@ The main purpose of a VXLAN is to segment the network exactly like VLAN
     GRE (Generic Routing Encapsulation) is a tunnel traffic encapsulation (IP to IP L3) (vpn ...)
     
 
+#### Underlay / Overlay
+
+- Underlay: Physical network (layer 3)
+- Overlay: Virtual VXLAN (L2 on L3 - Ethernet on UDP/IP)
+
+
+
 </br>
 
 ```
@@ -270,11 +319,29 @@ Quand utiliser VXLAN, VLAN ou GRE ?
 https://www.fibermall.com/fr/blog/vxlan.htm# - Comprendre VXLAN : Explication du réseau local extensible virtuel
 
 
+ip add 
+
+### STP - Spanning tree protocol
+
+#### Doc
+- https://www.youtube.com/watch?v=6MW5P6Ci7lw
+- https://www.youtube.com/watch?v=japdEY1UKe4
+
+Prevent from broacast loops and broadcast storm 
+
+
+
+
 
 ## P3 - BGP configuration on GNS3
 
 - https://www.youtube.com/watch?v=XcCID1ebkjs
 
+
+### EVPN x VXLAN 
+
+#### Doc
+- 
 
 
 ### VPC - Virutal Private Cloud
@@ -284,3 +351,5 @@ https://www.fibermall.com/fr/blog/vxlan.htm# - Comprendre VXLAN : Explication du
 ### IP Command
 
 ip link 
+
+
