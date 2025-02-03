@@ -353,3 +353,8 @@ Prevent from broacast loops and broadcast storm
 ip link 
 
 
+## Usefuls Commands
+```
+ip -d link show IFACE - show caracteristics of an interface IFACE
+ip route add default via x.x.x.x dev iface - create a default route x.x.x.x and via the interface dev iface
+```
