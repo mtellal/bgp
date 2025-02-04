@@ -1,8 +1,6 @@
 # BGP
 
-
 # P1
-
 
 ### GNS3
 
@@ -21,7 +19,6 @@ Graphical Network Simulator is used to configure, test and troubleshoot virtual 
 A software that implements differents network routing protocols. These protocols allow the routers do forwards informations. Use the kernel's routing stack for packet forwarding 
 
 ### BGP - Border Gateway Protocol
-
 BGP is a huge topic because it is a protocol for a specific topology of a network. So to learn what it is used for and how it works, we firstly need to understand the fundamentals:
 - What is routing inside a network ? 
 - What are the routing protocols ?
@@ -29,7 +26,7 @@ BGP is a huge topic because it is a protocol for a specific topology of a networ
 
 #### Documentation
 Chapters (FR) - Ip Routing
-https://racine.gatoux.com/lmdr/index.php/sommaire-routage-ip/
+- (French) https://racine.gatoux.com/lmdr/index.php/sommaire-routage-ip/
 
 
 #### What is a routing protocol ?
@@ -37,32 +34,43 @@ https://racine.gatoux.com/lmdr/index.php/sommaire-routage-ip/
 
 
 #### What is BGP ? How it works ?
+Border Gateway Protocol is a extern routing protocol (EGP) used to exchanges routes between Autonomous systems (AS).
 
 #### What is IGP, EGP and AS ?
+(French) https://racine.gatoux.com/lmdr/index.php/igp-egp-et-as/ 
 
-#### What is OSPF ?
+- **Interior Gateway Protocol**
+</br>
+Used to exchange routing table information between gateways (routers) inside an AS. </br>
+IGPs are divided in 2 categories:
+    - **Distance-vector routing protocols** </br>
+    Measures the distance by the numbers of routers a packet has to pass; one rounter count as one hop. Each nodes exchange its routing table with his neighbors. Exemple RIP
 
-#### What is ISIS ?
+    - **Link-state routing protocols** </br>
+    Every nodes constructs a map of the connectivity to the network in the form of a graph, showing how nodes are connected to each others. Then independently calculates the next best logical path from it to every possible destination in the network.</br>
+    Routers exchange betwen them a lot of informations about their connectivity (delay, reachable, ...)
+
+
+- **Exterior Gateway Protocol**
+</br>
+Used to exchange routing table information between gateways (routers) between ASs.
+The most used protocol. BGP is the mainly Exterior Gateway Protocol.
+
+- **Autonomous System**
+</br>
+A collection of connected IP networks, physical networks and routers considered and managed by a single entity. It's possible to enter and leave the as by border routers. Each AS have an ASN (Autonomous System Number).
+
+#### What is Open Shortest Path First (OSPF) ?
+https://en.wikipedia.org/wiki/Open_Shortest_Path_First </br>
+https://www.youtube.com/watch?v=kfvJ8QVJscc </br>
+OSPF is an Interior Gateway Protocol. It uses a link state routing. 
+
+#### What is Intermediate System to Intermediat System (ISIS) ?
+https://en.wikipedia.org/wiki/IS-IS </br>
+IS-IS is a Interior Gateway Protocol. It uses a link state routing. 
 
 #### What are their differences ?
-
-
-## Types of Protocols
-- Vector Distance:
-    
-    
-- Links state:
-    need a lot of informations to pick a route and a router
-
-</br>
-
-
-
-
-
-
-
-
+https://www.youtube.com/watch?v=K4prZSnOUTQ&t=211s
 
 ---
 
@@ -74,7 +82,7 @@ Before jumping into concepts of bridges and vxlan some  basics knowledge in netw
 
 ### Network Interfaces 
 
-#### Doc
+#### Documentation
 - https://www.baeldung.com/linux/network-interface-physical-virtual
 
 #### What are network interfaces ?
@@ -96,7 +104,7 @@ lrwxrwxrwx 1 root root 0 Jan 28 16:20 enp0s3 -> ../../devices/pci0000:00/0000:00
 
 ### LAN - Local Area Network
 
-#### Doc
+#### Documnetation
 - https://www.cloudflare.com/fr-fr/learning/network-layer/what-is-a-lan/
 
 ### Informations
@@ -108,7 +116,7 @@ MAN -> Metropolitan Area Network - Cities
 
 ## Bridge (Network Interface)
  
-#### Doc
+#### Documentation
 - https://www.lemagit.fr/definition/Pont-reseau
 - https://fr.wikipedia.org/wiki/Pont_(r%C3%A9seau)
 - https://phoenixnap.fr/glossaire/ponts-LAN
@@ -162,21 +170,21 @@ ip addr add 30.1.1.254/24 dev br0
 ```
 - And Voila ! Hosts can ping each other 
 
-#### Ok ok cool ... But How ?
+### Ok ok cool ... But How ?
 
 Well in this exemple our router is useless haha. We are only using the ethernet connection and functionnalities. Let's show the differents steps with a ping (host1 -> host2).
 
-#### 1. Gateway and network search
+- **1. Gateway and network search** </br>
 host-1 see that the address to ping is on the same network that her so it's directly accessible by sending an ARP request over the address of the network (30.1.1.0)
-#### 2. host-1 ARP 
+- **2. host-1 ARP** </brs>
 host-1 send and ARP request on broadcast (ff:ff:ff:ff:ff:ff) over the network (30.1.1.0)
-#### 3. Bridge forward 
+- **3. Bridge forward** </br>
 The bridge interface receive the ARP request and forwrad it to all of the associated interfaces.
-#### 4. host-2 ARP
+- **4. host-2 ARP** </br>
 host-2 recieve the ARP request send by the router (bridge) see that her ip address match and then send back her MAC address to the bridge
-#### 5. Bridge forward
+- **5. Bridge forward** </br>
 The bridge receive the response of the arp request (host-2). Check the MAC table and forward the traffic to host-1.
-#### 6. Update ARP table
+- **6. Update ARP table** </br>
 host-1 receive the response and update his ARP table (IP <-> MAC)
 
 >Note ! `arp` - command display the ARP table of a machine
@@ -184,55 +192,54 @@ host-1 receive the response and update his ARP table (IP <-> MAC)
 
 ---
 
-
-
 ### VLAN - Virtual Local Area Network
 
-#### Doc
+#### Documentation
+- https://en.wikipedia.org/wiki/VLAN
 - https://fr.wikipedia.org/wiki/R%C3%A9seau_local_virtuel
 - https://datascientest.com/vlan-tout-savoir
 - https://fr.wikipedia.org/wiki/IEEE_802.1Q
+- https://www.youtube.com/watch?v=jC6MJTh9fRE
+- https://www.youtube.com/watch?v=A9lMH0ye1HU
+- https://www.youtube.com/watch?v=QPqVtguOz4w&list=PLUlQYvNTl7iZI0AqGywDAQ-typ-tpB4JV
+- https://fr.wikipedia.org/wiki/IEEE_802.1Q
+- https://www.youtube.com/watch?v=hD0fBfYIoDU
 
-### Informations
-- A way to divide a LAN Network into multiples networks VLAN (ex: marketing services and sales services)
-- The division is made by a software (virtual)
+
+We saw previously what a LAN, MAN and WAN is. Now it's time to understand what a VLAN is and what it is used for.
+
+### What is a VLAN ?
+- A way to segment a LAN network into multiples virtual networks (ex: services sales, marketing ...)
+- The switchs add a 802.1Q format header of 4 bytes.
 - VLAN and subnetworking are 2 differents way to divide a network
 - A TAG ID is placed inside the frame and have a max value of 4096 
-| header | TAG ID | rest of the frame |
-- Comutators delivers the packet only if the frame only if the tag id correponds to the good port, linit the bandwidth
 
+### What it is used for ?
+- minimize the brodcast load traffic on a network
+- better way to manage groups of hosts (sales, marketing etc...)
+- security, a host can only its traffic and not all the traffic of the network
 
-</br>
+```
+802.1Q Tag Format
+| 16 bytes - Tag protocol identifier (TPID)   |        16 bytes - Tag Control Identifier (TCI)          |
+                                              |  3 bits - PCP  | 1 bit - DEI | 12 bits - VLAN Identifier|
+```
+- **Tag Protocol Identifier** -  </br>
+Value of 0x8100 wich identify the frame from untagged frames for the switches
+- **Priority Code Point** -  maps the frame to priority level
+- **Drop eligible Indicator** - indicate eligibility to drop the frame
+- **VLAN identifier** - id used to identify the vlan, values 0 - 4095  
+
 
 
 ## VXLAN - Virtual eXtensible Local Aran Network
 
-#### Doc
-- https://www.youtube.com/watch?v=QPqVtguOz4w&list=PLUlQYvNTl7iZI0AqGywDAQ-typ-tpB4JV
-- https://fr.wikipedia.org/wiki/IEEE_802.1Q
-
-### Informations
-- Another encapsulation method
-- When the frame pass by a switch the frame encapsule a tag id with the eth header and the payload
-</br>
-| eth header | TAG (id vlan) | payload | FCA |
-
-
-
-</br>
-
 - https://vincent.bernat.ch/en/blog/2017-vxlan-linux
-
-### Create a VXLAN on eth1 
-
-ip  link add vxlan10 type vxlan10 id 10 dev eth1 remote x.x.x.x dtsport 4789 - 
-A vxlan is created on the eth1 interface with a vtep defined to 
-
 
 
 ### VXLAN - Virtualized eXtensible Local Area Network
 
-#### Doc
+#### Documentation
 - https://www.youtube.com/watch?v=QPqVtguOz4w
 - https://www.youtube.com/watch?v=YNqKDI_bnPM&list=PLDQaRcbiSnqFe6pyaSy-Hwj8XRFPgZ5h8
 - https://forum.huawei.com/enterprise/intl/fr/thread/Que-sont-les-VTEP-et-les-VNI-dans-VXLAN/667502537563062272?blogId=667502537563062272
@@ -291,7 +298,7 @@ ip add
 
 ### STP - Spanning tree protocol
 
-#### Doc
+#### Documentation
 - https://www.youtube.com/watch?v=6MW5P6Ci7lw
 - https://www.youtube.com/watch?v=japdEY1UKe4
 
@@ -308,7 +315,7 @@ Prevent from broacast loops and broadcast storm
 
 ### EVPN x VXLAN 
 
-#### Doc
+#### Documentation
 - 
 
 
