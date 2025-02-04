@@ -37,36 +37,13 @@ Concepts:
 
 </br>
 
-## LAN - Local Area Network
-
-#### Doc
-- https://www.cloudflare.com/fr-fr/learning/network-layer/what-is-a-lan/
-
-### Informations
-A network that defines devices on the same network, limited by the same physical (ex: geographic) zone. 
-
-WAN -> Wide Area Network - multiple buidlings (or multpiple LAN)
-MAN -> Metropolitan Area Network - Cities 
 
 </br>
 
-## VLAN - Virtual Local Area Network
-
-#### Doc
-- https://fr.wikipedia.org/wiki/R%C3%A9seau_local_virtuel
-- https://datascientest.com/vlan-tout-savoir
-- https://fr.wikipedia.org/wiki/IEEE_802.1Q
-
-### Informations
-- A way to divide a LAN Network into multiples networks VLAN (ex: marketing services and sales services)
-- The division is made by a software (virtual)
-- VLAN and subnetworking are 2 differents way to divide a network
-- A TAG ID is placed inside the frame and have a max value of 4096 
-| header | TAG ID | rest of the frame |
-- Comutators delivers the packet only if the frame only if the tag id correponds to the good port, linit the bandwidth
 
 
-</br>
+---
+
 
 # P2
 
@@ -95,25 +72,17 @@ lrwxrwxrwx 1 root root 0 Jan 28 10:53 docker0 -> ../../devices/virtual/net/docke
 lrwxrwxrwx 1 root root 0 Jan 28 16:20 enp0s3 -> ../../devices/pci0000:00/0000:00:03.0/net/enp0s3
 ```
 
-</br>
-
-
-
-## VXLAN - Virtual eXtensible Local Aran Network
+### LAN - Local Area Network
 
 #### Doc
-- https://www.youtube.com/watch?v=QPqVtguOz4w&list=PLUlQYvNTl7iZI0AqGywDAQ-typ-tpB4JV
-- https://fr.wikipedia.org/wiki/IEEE_802.1Q
+- https://www.cloudflare.com/fr-fr/learning/network-layer/what-is-a-lan/
 
 ### Informations
-- Another encapsulation method
-- When the frame pass by a switch the frame encapsule a tag id with the eth header and the payload
-</br>
-| eth header | TAG (id vlan) | payload | FCA |
+A network that defines devices on the same network, limited by the same physical (ex: geographic) zone. 
 
+WAN -> Wide Area Network - multiple buidlings (or multpiple LAN)
+MAN -> Metropolitan Area Network - Cities 
 
-
-</br>
 
 ## Bridge (Network Interface)
  
@@ -134,12 +103,12 @@ See the exercice below
 We will create a simple exercice to understand how a bridge interface works.
 ```
 TOPOLOGY
-        -------------------
-        |     router    |
-        -------------------
-             |eth0: l2|
-             |eth1: l2|
-             |br0: 30.1.1.254 (l3)|
+         -----------------
+         |     router    |
+         -----------------
+               |eth0|
+               |eth1|
+               |br0 |
              -----|------               
         eth0 |          | eth1
              |          |
@@ -188,10 +157,47 @@ The bridge receive the response of the arp request (host-2). Check the MAC table
 #### 6. Update ARP table
 host-1 receive the response and update his ARP table (IP <-> MAC)
 
->Note ! `arp -a` - display the ARP table of a machine
+>Note ! `arp` - command display the ARP table of a machine
+>Note ! `ip neigh show` - command show the associations IP <-> MAC
+
+---
 
 
-## P2
+
+### VLAN - Virtual Local Area Network
+
+#### Doc
+- https://fr.wikipedia.org/wiki/R%C3%A9seau_local_virtuel
+- https://datascientest.com/vlan-tout-savoir
+- https://fr.wikipedia.org/wiki/IEEE_802.1Q
+
+### Informations
+- A way to divide a LAN Network into multiples networks VLAN (ex: marketing services and sales services)
+- The division is made by a software (virtual)
+- VLAN and subnetworking are 2 differents way to divide a network
+- A TAG ID is placed inside the frame and have a max value of 4096 
+| header | TAG ID | rest of the frame |
+- Comutators delivers the packet only if the frame only if the tag id correponds to the good port, linit the bandwidth
+
+
+</br>
+
+
+## VXLAN - Virtual eXtensible Local Aran Network
+
+#### Doc
+- https://www.youtube.com/watch?v=QPqVtguOz4w&list=PLUlQYvNTl7iZI0AqGywDAQ-typ-tpB4JV
+- https://fr.wikipedia.org/wiki/IEEE_802.1Q
+
+### Informations
+- Another encapsulation method
+- When the frame pass by a switch the frame encapsule a tag id with the eth header and the payload
+</br>
+| eth header | TAG (id vlan) | payload | FCA |
+
+
+
+</br>
 
 - https://vincent.bernat.ch/en/blog/2017-vxlan-linux
 
