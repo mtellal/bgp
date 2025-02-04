@@ -1,32 +1,51 @@
 # BGP
 
-## Documentation 
 
-Chapters (fr) - Ip Routing
+# P1
+
+
+### GNS3
+
+#### Documentation 
+- https://docs.gns3.com/docs/
+
+#### What is GNS3 ?
+Graphical Network Simulator is used to configure, test and troubleshoot virtual and real networks. GNS3 allows you to run a small topology consisting of only a few devices on your laptop, to those that have many devices hosted on multiple servers or even hosted in the cloud. It is used for certifications like CCNA and CCNP.
+
+### Free Range Routing
+
+#### Documentation 
+- https://frrouting.org/
+
+#### What is FRR ?
+A software that implements differents network routing protocols. These protocols allow the routers do forwards informations. Use the kernel's routing stack for packet forwarding 
+
+### BGP - Border Gateway Protocol
+
+BGP is a huge topic because it is a protocol for a specific topology of a network. So to learn what it is used for and how it works, we firstly need to understand the fundamentals:
+- What is routing inside a network ? 
+- What are the routing protocols ?
+- What is sepecific to BGP ?
+
+#### Documentation
+Chapters (FR) - Ip Routing
 https://racine.gatoux.com/lmdr/index.php/sommaire-routage-ip/
 
 
-
-## Free Range Routing 
-
-A software that implements differents network routing protocols. These protocols allow the routers do forwards informations.
-
-Use the kernel's routing stack for packet forwarding 
-
-# Border Gateway Protocol
-
-Concepts:
-- Autonomous system 
-- IGP / EGP
+#### What is a routing protocol ?
+- https://en.wikipedia.org/wiki/Routing_protocol 
 
 
+#### What is BGP ? How it works ?
 
-## IGP
+#### What is IGP, EGP and AS ?
 
+#### What is OSPF ?
 
-## EGP
+#### What is ISIS ?
 
-</br>
+#### What are their differences ?
+
 
 ## Types of Protocols
 - Vector Distance:
@@ -38,7 +57,10 @@ Concepts:
 </br>
 
 
-</br>
+
+
+
+
 
 
 
@@ -295,10 +317,9 @@ Prevent from broacast loops and broadcast storm
 
 ## Usefuls Commands
 ```
-arp:
-arp -a - display the ARP table 
+arp - display the ARP table 
 
-ip:
-ip -d link show IFACE - show caracteristics of an interface IFACE
+ip neigh show           - display table association of IP <-> MAC
+ip -d link show IFACE   - show caracteristics of an interface IFACE
 ip route add default via x.x.x.x dev iface - create a default route x.x.x.x and via the interface dev iface
 ```
