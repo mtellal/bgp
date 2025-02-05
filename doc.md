@@ -213,6 +213,7 @@ We saw previously what a LAN, MAN and WAN is. Now it's time to understand what a
 - The switchs add a 802.1Q format header of 4 bytes.
 - VLAN and subnetworking are 2 differents way to divide a network
 - A TAG ID is placed inside the frame and have a max value of 4096 
+- Defined in 802.1Q standard
 
 ### What it is used for ?
 - minimize the brodcast load traffic on a network
@@ -234,60 +235,43 @@ Value of 0x8100 wich identify the frame from untagged frames for the switches
 
 ## VXLAN - Virtual eXtensible Local Aran Network
 
-- https://vincent.bernat.ch/en/blog/2017-vxlan-linux
-
-
-### VXLAN - Virtualized eXtensible Local Area Network
-
 #### Documentation
 - https://www.youtube.com/watch?v=QPqVtguOz4w
 - https://www.youtube.com/watch?v=YNqKDI_bnPM&list=PLDQaRcbiSnqFe6pyaSy-Hwj8XRFPgZ5h8
 - https://forum.huawei.com/enterprise/intl/fr/thread/Que-sont-les-VTEP-et-les-VNI-dans-VXLAN/667502537563062272?blogId=667502537563062272
 - https://www.youtube.com/watch?v=M4GpBecb59o
+- https://vincent.bernat.ch/en/blog/2017-vxlan-linux
+- https://datatracker.ietf.org/doc/rfc7348/
+- https://support.huawei.com/enterprise/en/doc/EDOC1100277355/4b7cb278/overview-of-vxlan
+- https://www.youtube.com/watch?v=7nwlwLJH6yQ
 
-The main purpose of a VXLAN is to segment the network exactly like VLAN 
+### What is a VXLAN ?
 
-- Encapsulation	
-    Directement sur Ethernet	
-    UDP sur IP (sur Ethernet)
-- Nombre d’IDs	
-    4096 VLANs max (12 bits)	
-    ~16 millions de VXLANs (24 bits)
-- Transport	
-    Fonctionne sur un LAN	
-    Peut traverser un WAN/IP
-- Niveau	
-    Couche 2 (Ethernet)	
-    Couche 2 sur Couche 3 (Ethernet sur UDP/IP)
-- Cas d’usage	
-    Segmentation locale dans un switch ou routeur Virtualisation et Datacenters (overlay)
-
-- VXLAN frame format encapsule the original layer 2 frame </br>
-```
--------------------------
-| VXLAN | Layer 2 Frame |
--------------------------
-```
-- Upstream switch attaches a VXLAN header to the original frame. This header contains values ~16M compared to the 4096 of vlan
-- This new frame is encapsuled in a udp package (GRE ?)
-    GRE (Generic Routing Encapsulation) is a tunnel traffic encapsulation (IP to IP L3) (vpn ...)
-    
-
-#### Underlay / Overlay
-
-- Underlay: Physical network (layer 3)
-- Overlay: Virtual VXLAN (L2 on L3 - Ethernet on UDP/IP)
+- Overlay encapsulation protocol
+- A way to segment the network into multiples virtual networks 
+- Switches (VTEP) place a header VXLAN with a VNI of 24 bits (16B values) in the ethernet frame
+- Defined in RFC 7348
 
 
+### What it is used for ?
+The VXLAN protocol has beed created to respond to differentes issues. 
+- **VLAN limitation** 
+By adding more bit for the VN identifier (VNI) its now possible to have ~16B differents VXLANs
+- **Cloud Virtualization**  - Cloud's expansion bring new issues like: </br>
+The Cross-pod Expansion - Imagine that a company need more ressources (pods) to hanle a huge load. The cloud provider need to expand the company'ressources to other pods. VMs need to be on the same network to communicate so a L2 network is needed. VLAN could be an option but only if we are sure the expansion is on the same pod, the same LAN. </br>
+IP addressing - How to differentiate ips of the same politics but for 2 differents companies ? Well layer 2 is the most suitable way to resolve this issue. So we can't just rely only on ip networks etc...
+- **STP issues** - Spanning tree protocol block some switch ports to limit broadcast flood
+
+> Note ! **Underlay**: Physical network (layer 3)
+> **Overlay**: Virtual VXLAN (L2 on L3 - Ethernet on UDP/IP)
 
 </br>
 
-```
-Quand utiliser VXLAN, VLAN ou GRE ?
-- VLAN  -> Segmentation réseau sur un switch local
-- VXLAN -> Transporter du niveau 2 sur IP pour la virtualisation (VMs, conteneurs)
-- GRE   -> Interconnecter deux réseaux distants en tunnel IP
-```
+### When use VXLAN or VLAN ?
+
+- VLAN  -> Segment network on the same switches, same LAN
+- VXLAN -> Transport l2 frame to IP virtualisation (VMs, containers ...)
+
 
 ### Create a VXLAN  
 
