@@ -273,12 +273,12 @@ IP addressing - How to differentiate ips of the same politics but for 2 differen
 - VXLAN -> Transport l2 frame to IP virtualisation (VMs, containers ...)
 
 
+
+
 ### Create a VXLAN  
 
 https://www.fibermall.com/fr/blog/vxlan.htm# - Comprendre VXLAN : Explication du réseau local extensible virtuel
 
-
-ip add 
 
 ### STP - Spanning tree protocol
 
@@ -294,16 +294,47 @@ Prevent from broacast loops and broadcast storm
 
 ## P3 - BGP configuration on GNS3
 
+### Documentation
 - https://www.youtube.com/watch?v=XcCID1ebkjs
+- https://www.youtube.com/watch?v=O6tCoD5c_U0
+- https://www.youtube.com/watch?v=1nCflEqdSBk
+ 
+## BGP 
+
+### What is BGP ?
+Border Gateway Protocol is a routing technology to transfer packets over networks (AS).
+It is a Exterior Gateway Protocol and the main protocol to making Internet. It connects companies, ineternet provider (IP) and big networks between them.  
+</br>
+BGP is by essence a Exterior Gateway Protocol but it can be used inside an AS. When 2 routers used BGP inside the same AS, BGP is used in intern (iBGP) and be configured differently. eBGP is used to exchange route informations between ASs and iBGP is used to ditributing informations to the router within your own AS.
+
+### How BGP works ? 
+In a BGP system, routers establish TCP connexions on port 179 called BGP peers, and exchange informations about AS's paths. BGP uses hiw own metrics to determine the Best Path Selection (BPS) (AS-Path, Next-Hop...).
 
 
-### EVPN x VXLAN 
+
+
+### What is MPLS ? 
 
 #### Documentation
-- 
+- https://www.youtube.com/watch?v=BuIWNecUAE8
+
+</br>
+MPLS - Multiprotocol Label Switching is a routing technique that use labels rather than network addresses. Instead of read the routing table at each hops, MPLS creates a labels system to improve the traffic and have a better QoS (Quality of service)
+It takes place between the layer 2 and the layer 3.
+
+### How MLPS works ?
+When a packet pass by the MPLS network, a Label Edge Router (LER) assign to the packet a label.
+The next routers (Label Switching Routers - LSR) do not read the addrees anynore but use the label to transfer the packet. At the edge of the MPLS router a LER remove the label letting the packet in his origin form. Routers can have differents names like (CE customer Edge, PE Provider Edge, P Provider)
+
+### How it is related to BGP (relation) and what are the differences ? 
+BGP is a routing technology, it calculates the best paths to transfer a packet through differents networks and MPLS improves the transimission of the packets between the routers.
 
 
-### VPC - Virutal Private Cloud
+
+
+
+
+### VPC - Virutal Private Cloud ??
 
 
 ## Usefuls Commands
