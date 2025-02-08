@@ -311,8 +311,6 @@ BGP is by essence a Exterior Gateway Protocol but it can be used inside an AS. W
 In a BGP system, routers establish TCP connexions on port 179 called BGP peers, and exchange informations about AS's paths. BGP uses hiw own metrics to determine the Best Path Selection (BPS) (AS-Path, Next-Hop...).
 
 
-
-
 ### What is MPLS ? 
 
 #### Documentation
@@ -330,6 +328,32 @@ The next routers (Label Switching Routers - LSR) do not read the addrees anynore
 BGP is a routing technology, it calculates the best paths to transfer a packet through differents networks and MPLS improves the transimission of the packets between the routers.
 
 
+
+### EVPN - VXLAN ? Interactions ? It is separated ?
+https://www.youtube.com/watch?v=cdvstTm467k </br>
+
+### What is the Control plane (CP) and the Data plane (DP) ?
+https://fr.wikipedia.org/wiki/Plan_de_contr%C3%B4le </br>
+https://www.snaplogic.com/blog/data-plane-vs-control-plane-whats-the-difference </br>
+https://www.ibm.com/think/topics/control-plane-vs-data-plane </br>
+
+Control plane and Data plane are **concepts** that help engineers, developers and network administrators understand how data travels across a network.
+
+A control plane is a critical part of a computer network that **carries information and controls routing, determining the path data travels between connected devices.** Defines what to do with the ingress packets, where they should go. (ex: OSPF, BGP EVPN). It maintain the routint table. 
+
+The data plane is responsible for the actual **movement of data from one system to another**. It is the workhorse that **delivers data to end users from systems** and vice versa. It checks the routing table to know in wich interface forward traffic. (ex: VXLAN)
+
+
+### Differences between the Control Plane and the Data plane ?
+https://www.cloudflare.com/fr-fr/learning/network-layer/what-is-the-control-plane/ </br>
+ 
+### How OSPF works and the configuration ?
+https://networklessons.com/ospf/introduction-to-ospf </br>
+https://networklessons.com/ospf/basic-ospf-configuration </br>
+https://study-ccna.com/loopback-interface-loopback-address/ </br>
+https://www.youtube.com/watch?v=faUd0vcRzI8 </br>
+
+A loopback interface is a virtual interface in our network device that is always up and active after it has been configured.The loopback interface can be considered stable because once you enable it, it will remain up until you issue the shutdown command under its interface configuration mode. It’s very useful when you want a single IP address as a reference that is independent of the status of any physical interfaces in the networking device. You can also configure the loopback address as the Router ID for routing protocols like OSPF and BGP.
 
 
 
