@@ -16,22 +16,14 @@ Graphical Network Simulator is used to configure, test and troubleshoot virtual 
 - https://frrouting.org/
 
 #### What is FRR ?
-A software that implements differents network routing protocols. These protocols allow the routers do forwards informations. Use the kernel's routing stack for packet forwarding 
-
-### BGP - Border Gateway Protocol
-BGP is a huge topic because it is a protocol for a specific topology of a network. So to learn what it is used for and how it works, we firstly need to understand the fundamentals:
-- What is routing inside a network ? 
-- What are the routing protocols ?
-- What is sepecific to BGP ?
+A software that implements differents network routing protocols. These protocols allow the routers to forwards informations. Use the kernel's functionalities like the kernel routing stack for packet forwarding.
 
 #### Documentation
 Chapters (FR) - Ip Routing
 - (French) https://racine.gatoux.com/lmdr/index.php/sommaire-routage-ip/
 
-
 #### What is a routing protocol ?
 - https://en.wikipedia.org/wiki/Routing_protocol 
-
 
 #### What is BGP ? How it works ?
 Border Gateway Protocol is a extern routing protocol (EGP) used to exchanges routes between Autonomous systems (AS).
@@ -41,7 +33,7 @@ Border Gateway Protocol is a extern routing protocol (EGP) used to exchanges rou
 
 - **Interior Gateway Protocol**
 </br>
-Used to exchange routing table information between gateways (routers) inside an AS. </br>
+Used to exchange routing table information between gateways (routers) **inside** an AS. </br>
 IGPs are divided in 2 categories:
     - **Distance-vector routing protocols** </br>
     Measures the distance by the numbers of routers a packet has to pass; one rounter count as one hop. Each nodes exchange its routing table with his neighbors. Exemple RIP
@@ -53,12 +45,12 @@ IGPs are divided in 2 categories:
 
 - **Exterior Gateway Protocol**
 </br>
-Used to exchange routing table information between gateways (routers) between ASs.
+Used to exchange routing table information between gateways (routers) **between** ASs.
 The most used protocol. BGP is the mainly Exterior Gateway Protocol.
 
 - **Autonomous System**
 </br>
-A collection of connected IP networks, physical networks and routers considered and managed by a single entity. It's possible to enter and leave the as by border routers. Each AS have an ASN (Autonomous System Number).
+A collection of connected IP networks, physical networks and routers considered and managed by a single entity. It's possible to enter and leave the AS by border routers. Each AS have an ASN (Autonomous System Number).
 
 #### What is Open Shortest Path First (OSPF) ?
 https://en.wikipedia.org/wiki/Open_Shortest_Path_First </br>
@@ -77,7 +69,7 @@ https://www.youtube.com/watch?v=K4prZSnOUTQ&t=211s
 
 # P2
 
-Before jumping into concepts of bridges and vxlan some  basics knowledge in networking on linux are required.
+Before jumping into concepts of bridges and vxlan some basics knowledge in linux networking are required.
 
 
 ### Network Interfaces 
@@ -108,7 +100,7 @@ lrwxrwxrwx 1 root root 0 Jan 28 16:20 enp0s3 -> ../../devices/pci0000:00/0000:00
 - https://www.cloudflare.com/fr-fr/learning/network-layer/what-is-a-lan/
 
 ### Informations
-A network that defines devices on the same network, limited by the same physical (ex: geographic) zone. 
+A network that defines devices on the same network, limited by the same physical zone (ex: geographic). 
 
 WAN -> Wide Area Network - multiple buidlings (or multpiple LAN)
 MAN -> Metropolitan Area Network - Cities 
@@ -124,7 +116,7 @@ MAN -> Metropolitan Area Network - Cities
 
 ### What is a bridge ?
 - Behavior of a virtual switch or a virtual ethernet comutator 
-- It is used for interconnecting 2 LANs on the same protocol (ex: ethernet)
+- It is used for interconnecting 2 LANs on the same protocol and extends L2 layer (ex: ethernet)
 - In practice a bridge connects 2 or more interfaces between them, capture the traffic and map each MAC addresses to each interfaces.
 See the exercice below
 
@@ -189,6 +181,7 @@ host-1 receive the response and update his ARP table (IP <-> MAC)
 
 >Note ! `arp` - command display the ARP table of a machine
 >Note ! `ip neigh show` - command show the associations IP <-> MAC
+>Note ! `brctl showmacs br0` - show MAC mapping in a bridge 
 
 ---
 
@@ -205,15 +198,15 @@ host-1 receive the response and update his ARP table (IP <-> MAC)
 - https://fr.wikipedia.org/wiki/IEEE_802.1Q
 - https://www.youtube.com/watch?v=hD0fBfYIoDU
 
-
-We saw previously what a LAN, MAN and WAN is. Now it's time to understand what a VLAN is and what it is used for.
+We saw previously what a LAN, MAN and WAN is. Now it's time to understand what is a VLAN and what it is used for.
 
 ### What is a VLAN ?
 - A way to segment a LAN network into multiples virtual networks (ex: services sales, marketing ...)
 - The switchs add a 802.1Q format header of 4 bytes.
 - VLAN and subnetworking are 2 differents way to divide a network
-- A TAG ID is placed inside the frame and have a max value of 4096 
+- A TAG ID is placed inside the frame and have a max value of 4096 (12 bits reserved)
 - Defined in 802.1Q standard
+- To connects two hosts with differents vlan we need a router (with a trunk port)
 
 ### What it is used for ?
 - minimize the brodcast load traffic on a network
@@ -262,6 +255,14 @@ The Cross-pod Expansion - Imagine that a company need more ressources (pods) to 
 IP addressing - How to differentiate ips of the same politics but for 2 differents companies ? Well layer 2 is the most suitable way to resolve this issue. So we can't just rely only on ip networks etc...
 - **STP issues** - Spanning tree protocol block some switch ports to limit broadcast flood
 
+### STP - Spanning tree protocol
+
+#### Documentation
+- https://www.youtube.com/watch?v=6MW5P6Ci7lw
+- https://www.youtube.com/watch?v=japdEY1UKe4
+
+Prevent from broacast loops and broadcast storm 
+
 > Note ! **Underlay**: Physical network (layer 3)
 > **Overlay**: Virtual VXLAN (L2 on L3 - Ethernet on UDP/IP)
 
@@ -272,32 +273,19 @@ IP addressing - How to differentiate ips of the same politics but for 2 differen
 - VLAN  -> Segment network on the same switches, same LAN
 - VXLAN -> Transport l2 frame to IP virtualisation (VMs, containers ...)
 
-
-
-
 ### Create a VXLAN  
 
 https://www.fibermall.com/fr/blog/vxlan.htm# - Comprendre VXLAN : Explication du réseau local extensible virtuel
 
-
-### STP - Spanning tree protocol
-
-#### Documentation
-- https://www.youtube.com/watch?v=6MW5P6Ci7lw
-- https://www.youtube.com/watch?v=japdEY1UKe4
-
-Prevent from broacast loops and broadcast storm 
-
-
-
-
-
-
-
-
-
-
-
+- Single remote end point 
+```
+ip link add my_vxlan type vxan id X dev ethX ip x.x.x.x remote y.y.y.y dstport 4789
+```
+- Multicast 
+```
+ip link add my_vxlan type vxlan id X dev ethX ip x.x.x.x group 224.y.y.y dstport 4789
+```
+IANA Guidelines for IPv4 Multicast Address Assignments: https://datatracker.ietf.org/doc/html/rfc5771
 
 
 
@@ -315,10 +303,10 @@ Prevent from broacast loops and broadcast storm
 
 ### What is BGP ?
 Border Gateway Protocol is a routing technology to transfer packets over networks (AS).
-It is a Exterior Gateway Protocol and the main protocol to making Internet. It connects companies, ineternet provider (IP) and big networks between them.  
+It is an Exterior Gateway Protocol (EGP) and the main protocol to making Internet. It connects companies, ineternet providers (IP) and big networks between them.  
 </br>
 BGP is by essence a Exterior Gateway Protocol but it can be used inside an AS. 
-When 2 routers used BGP inside the same AS, BGP is used in intern (iBGP) and be configured differently. eBGP is used to exchange route informations between ASs and iBGP is used to ditributing informations to the router within your own AS.
+When 2 routers used BGP inside the same AS, BGP is used in intern (iBGP) and need to be configured differently. eBGP is used to exchange route informations between ASs and iBGP is used to ditributing informations to the router within your the AS.
 
 ### How BGP works ? 
 In a BGP system, routers establish TCP connexions on port 179 called BGP peers, and exchange informations about AS's paths. BGP uses hiw own metrics to determine the Best Path Selection (BPS) (AS-Path, Next-Hop...).
@@ -327,13 +315,13 @@ In a BGP system, routers establish TCP connexions on port 179 called BGP peers, 
 ### What is a Route Reflector System ? 
 https://en.wikipedia.org/wiki/Border_Gateway_Protocol#Route_reflectors </br>
 https://networklessons.com/bgp/bgp-route-reflector </br>
+https://datatracker.ietf.org/doc/html/rfc4456 </br>
 
-iBGP need a special configuration to work correctly, it need that every iBGP routers be connected in full mesh topology. 
-This configuration is really hard to maintain at large scale that why Route
-For N router we need to establish n * (n-1) / 2, 100 routers -> 4950
+iBGP need a special configuration to work correctly, it needs that every iBGP routers be connected in full mesh topology. 
+This configuration is hard to maintain and not scalable. (For N router we need to establish n * (n-1) / 2, so for 100 routers -> 4950 sessions) 
+The route reflector is a design that resolve this problem.
 
-A Route Reflector is a router in BGP that act as a central hub and resolve this issue. For redundency  multiple RR are configured in a iBGP system.
-
+A Route Reflector is a router in BGP that acts as a central hub. In practice, for redundency multiple RR are configured in an AS and each of them are connected to iBGP routers.
 
 #### Configuration Route Reflector
 
@@ -353,15 +341,16 @@ It takes place between the layer 2 and the layer 3.
 When a packet pass by the MPLS network, a Label Edge Router (LER) assign to the packet a label.
 The next routers (Label Switching Routers - LSR) do not read the addrees anynore but use the label to transfer the packet. At the edge of the MPLS router a LER remove the label letting the packet in his origin form. Routers can have differents names like (CE customer Edge, PE Provider Edge, P Provider)
 
-### How it is related to BGP (relation) and what are the differences ? 
-BGP is a routing technology, it calculates the best paths to transfer a packet through differents networks and MPLS improves the transimission of the packets between the routers.
+### How it is related to BGP (relation)? What are the differences ? 
+BGP is a routing technology, it calculates the best paths to transfer a packet through differents networks while MPLS improves the transimission of the packets between the routers. Thay can be used independently and act on differents planes (control plane and data plane).
 
 
 
 ### What is EVPN ? 
 https://rickmur.com/evpn-rfc-7432-explained/
 
-### 
+
+
 
 
 ### EVPN - VXLAN ? Interactions ? It is separated ?
@@ -382,11 +371,6 @@ The data plane is responsible for the actual **movement of data from one system 
 ### Differences between the Control Plane and the Data plane ?
 https://www.cloudflare.com/fr-fr/learning/network-layer/what-is-the-control-plane/ </br>
  
-
-
-
-
-
 
 
 ### How OSPF works and the configuration ?
