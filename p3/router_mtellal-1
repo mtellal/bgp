@@ -1,0 +1,33 @@
+#!/bin/sh
+
+ip link add br0 type bridge 
+ip link set br0 up 
+ip link add vxlan10 type vxlan id 10 dstport 4789
+ip link set vxlan10 up 
+
+brctl addif br0 eth1 
+brctl addif br0 vxlan10
+
+echo "
+interface eth0
+ ip address 10.1.1.1/30
+
+interface lo
+ ip address 1.1.1.1/32
+
+router bgp 65000
+  neighbor IBGP_GROUP peer-group 
+  neighbor IBGP_GROUP remote-as 65000
+  neighbor IBGP_GROUP update-source lo
+  bgp listen range 1.1.1.0/24 peer-group IBGP_GROUP 
+  address-family l2vpn evpn
+    neighbor IBGP_GROUP activate
+    neighbor IBGP_GROUP route-reflector-client
+  exit-address-family
+
+router ospf
+ network 0.0.0.0/0 area 0
+
+" > /etc/frr/frr.conf
+
+/etc/init.d/frr start

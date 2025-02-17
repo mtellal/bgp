@@ -292,6 +292,18 @@ Prevent from broacast loops and broadcast storm
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 ## P3 - BGP configuration on GNS3
 
 ### Documentation
@@ -305,10 +317,27 @@ Prevent from broacast loops and broadcast storm
 Border Gateway Protocol is a routing technology to transfer packets over networks (AS).
 It is a Exterior Gateway Protocol and the main protocol to making Internet. It connects companies, ineternet provider (IP) and big networks between them.  
 </br>
-BGP is by essence a Exterior Gateway Protocol but it can be used inside an AS. When 2 routers used BGP inside the same AS, BGP is used in intern (iBGP) and be configured differently. eBGP is used to exchange route informations between ASs and iBGP is used to ditributing informations to the router within your own AS.
+BGP is by essence a Exterior Gateway Protocol but it can be used inside an AS. 
+When 2 routers used BGP inside the same AS, BGP is used in intern (iBGP) and be configured differently. eBGP is used to exchange route informations between ASs and iBGP is used to ditributing informations to the router within your own AS.
 
 ### How BGP works ? 
 In a BGP system, routers establish TCP connexions on port 179 called BGP peers, and exchange informations about AS's paths. BGP uses hiw own metrics to determine the Best Path Selection (BPS) (AS-Path, Next-Hop...).
+
+
+### What is a Route Reflector System ? 
+https://en.wikipedia.org/wiki/Border_Gateway_Protocol#Route_reflectors </br>
+https://networklessons.com/bgp/bgp-route-reflector </br>
+
+iBGP need a special configuration to work correctly, it need that every iBGP routers be connected in full mesh topology. 
+This configuration is really hard to maintain at large scale that why Route
+For N router we need to establish n * (n-1) / 2, 100 routers -> 4950
+
+A Route Reflector is a router in BGP that act as a central hub and resolve this issue. For redundency  multiple RR are configured in a iBGP system.
+
+
+#### Configuration Route Reflector
+
+- https://networklessons.com/bgp/bgp-route-reflector
 
 
 ### What is MPLS ? 
@@ -329,6 +358,12 @@ BGP is a routing technology, it calculates the best paths to transfer a packet t
 
 
 
+### What is EVPN ? 
+https://rickmur.com/evpn-rfc-7432-explained/
+
+### 
+
+
 ### EVPN - VXLAN ? Interactions ? It is separated ?
 https://www.youtube.com/watch?v=cdvstTm467k </br>
 
@@ -347,6 +382,13 @@ The data plane is responsible for the actual **movement of data from one system 
 ### Differences between the Control Plane and the Data plane ?
 https://www.cloudflare.com/fr-fr/learning/network-layer/what-is-the-control-plane/ </br>
  
+
+
+
+
+
+
+
 ### How OSPF works and the configuration ?
 https://networklessons.com/ospf/introduction-to-ospf </br>
 https://networklessons.com/ospf/basic-ospf-configuration </br>

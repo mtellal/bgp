@@ -1,0 +1,36 @@
+#!/bin/sh
+
+echo "Creating Bridge and Vxlan ..."
+
+ip link add br0 type bridge 
+ip link set br0 up 
+ip link add vxlan10 type vxlan id 10 dstport 4789
+ip link set vxlan10 up 
+
+brctl addif br0 eth1 
+brctl addif br0 vxlan10
+
+echo "Copying configuraton file to /frr/frr.conf"
+echo "
+interface eth0
+ ip address 10.1.1.2/30
+ ip ospf area 0
+
+interface lo
+ ip address 1.1.1.2/32
+ ip ospf area 0
+
+router bgp 65000 
+ neighbor 1.1.1.1 remote-as 65000 
+ neighbor 1.1.1.1 update-source lo
+ address-family l2vpn evpn
+ neighbor 1.1.1.1 activate
+ advertise-all-vni
+exit-address-family
+
+router ospf
+
+" > /etc/frr/frr.conf
+
+echo "Launching frr"
+/etc/init.d/frr start 
