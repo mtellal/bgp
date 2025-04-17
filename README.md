@@ -1,6 +1,6 @@
 # BGP
 
-# P1
+# Part 1
 
 ### GNS3
 
@@ -67,7 +67,7 @@ https://www.youtube.com/watch?v=K4prZSnOUTQ&t=211s
 ---
 
 
-# P2
+# Part 2
 
 Before jumping into concepts of bridges and vxlan some basics knowledge in linux networking are required.
 
@@ -292,7 +292,7 @@ IANA Guidelines for IPv4 Multicast Address Assignments: https://datatracker.ietf
 
 
 
-## P3 - BGP configuration on GNS3
+## Part 3 - BGP configuration on GNS3
 
 ### Documentation
 - https://www.youtube.com/watch?v=XcCID1ebkjs
