@@ -1,4 +1,12 @@
-# BGP
+# Border Gateway Protocol
+
+The purpose of this project is to expand the knowledge you have gained through NetPractice. </br>
+You will have to **simulate a network and configure it using GNS3 with docker images**. </br>
+`BGP EVPN` is based on BGP (RFC 4271) and its extensions, `MP-BGP` (RFC 4760). </br>
+`BGP` is the routing protocol that drives the Internet. </br>
+Through MP-BGP extensions, it can be used to carry reachability information (NLRI) for various protocols (`IPv4`, `IPv6`, `L3
+VPN` and in this case, `EVPN`). **EVPN** is a special family used for publishing information
+about `MAC` addresses and the end devices that access them.
 
 # Part 1
 
